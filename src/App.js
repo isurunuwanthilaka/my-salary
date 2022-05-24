@@ -3,8 +3,8 @@ import { Row, Col, Form, Button, Container } from "react-bootstrap";
 import { round } from "lodash";
 
 function App() {
-  const [basic, setBasic] = useState(320000);
-  const [dollarRate, setDollarRate] = useState(350);
+  const [basic, setBasic] = useState(100000);
+  const [dollarRate, setDollarRate] = useState(353);
   const [requested, setRequested] = useState(false);
   const [calObj, setCalObj] = useState({
     usdBasic: 0,
