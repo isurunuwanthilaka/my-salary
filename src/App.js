@@ -42,6 +42,8 @@ function App() {
     const taxThreshold1 = 250000;
     const taxRate2 = 12 / 100;
     const taxThreshold2 = 500000;
+    const taxRate3 = 18 / 100;
+    const taxThreshold3 = 750000;
     const epfRate = 8 / 100;
     const epfRateEmployer = 12 / 100;
     const etfRate = 3 / 100;
@@ -51,10 +53,35 @@ function App() {
     const basicInUsd = round(basic / peggedRate, 2);
     const totalInLkr = basicInUsd * dollarRate + internetAllowance;
 
-    const taxableIncome2 = totalInLkr - taxThreshold2;
-    let totalTax = round(taxableIncome2 * taxRate2, 2);
+    let totalTax = 0.0;
+    if (totalInLkr >= taxThreshold1 && totalInLkr < taxThreshold2) {
+      const taxableIncome1 = totalInLkr - taxThreshold1;
+      totalTax += round(taxableIncome1 * taxRate1, 2);
+    }
+    if (totalInLkr >= taxThreshold1 && totalInLkr >= taxThreshold2) {
+      const taxableIncomeFull1 = taxThreshold2 - taxThreshold1;
+      totalTax += round(taxableIncomeFull1 * taxRate1, 2);
+    }
 
-    totalTax += round(taxThreshold1 * taxRate1, 2);
+    if (totalInLkr >= taxThreshold2 && totalInLkr < taxThreshold3) {
+      const taxableIncome2 = totalInLkr - taxThreshold2;
+      totalTax += round(taxableIncome2 * taxRate2, 2);
+    }
+
+    if (totalInLkr >= taxThreshold2 && totalInLkr >= taxThreshold3) {
+      const taxableIncomeFull2 = taxThreshold3 - taxThreshold2;
+      totalTax += round(taxableIncomeFull2 * taxRate2, 2);
+    }
+
+    if (totalInLkr > taxThreshold3) {
+      const taxableIncome3 = totalInLkr - taxThreshold3;
+      const tax3 = round(taxableIncome3 * taxRate3, 2);
+      if (tax3 <= 90000) {
+        totalTax += tax3;
+      } else {
+        totalTax += round(90000, 2);
+      }
+    }
 
     const epfDeductionsEmployee = round(basic * epfRate, 2);
     const epfByEmployer = round(basic * epfRateEmployer, 2);

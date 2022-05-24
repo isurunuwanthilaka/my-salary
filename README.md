@@ -1,2 +1,3 @@
-# react-app
-Template react app for github pages
+# my-salary
+
+App to calculate my salary
