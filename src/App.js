@@ -5,8 +5,18 @@ import { round } from "lodash";
 function App() {
   const [basic, setBasic] = useState(320000);
   const [dollarRate, setDollarRate] = useState(350);
-  const [requested, setRequested] = useState(false);
-  const [calObj, setCalObj] = useState({});
+  const [calObj, setCalObj] = useState({
+    usdBasic: 0,
+    basic: 0,
+    epfDeductionsEmployee: 0,
+    epfByEmployer: 0,
+    etfByEmployer: 0,
+    takeHome: 0,
+    totalTax: 0,
+    stampDuty: 0,
+    internetAllowance: 0,
+    totalInLkr: 0,
+  });
 
   const $ = (num) => {
     var formatter = new Intl.NumberFormat("en-US", {
@@ -24,20 +34,7 @@ function App() {
     return formatter.format(num);
   };
 
-  const basicHandler = (event) => {
-    setBasic(event.target.value);
-    setRequested(false);
-  };
-
-  const dollarRateHandler = (event) => {
-    setDollarRate(event.target.value);
-    setRequested(false);
-  };
-
-  const submitHandler = (event) => {
-    event.preventDefault();
-    setRequested(true);
-
+  const submitHandler = () => {
     const peggedRate = 200;
     const usdBasic = basic / peggedRate;
     const taxRate1 = 6 / 100;
@@ -70,7 +67,6 @@ function App() {
       usdBasic,
       basic,
       epfDeductionsEmployee,
-      epfDeductionsEmployee,
       epfByEmployer,
       etfByEmployer,
       takeHome,
@@ -81,108 +77,86 @@ function App() {
     });
   };
 
-  const DataForm = () => {
-    return (
-      <div>
-        <Container className="m-5 w-25">
-          <Form onSubmit={submitHandler}>
-            <Form.Group className="my-2" controlId="form.basic">
-              <Form.Label>Basic Salary (LKR) </Form.Label>
-              <Form.Control
-                type="number"
-                value={basic}
-                onChange={basicHandler}
-                placeholder="Enter Basic Salary"
-                required
-              />
-            </Form.Group>
-            <Form.Group className="my-2" controlId="form.DollarRate">
-              <Form.Label>Dollar Rate</Form.Label>
-              <Form.Control
-                type="number"
-                value={dollarRate}
-                onChange={dollarRateHandler}
-                placeholder="Enter Dollar Rate"
-                required
-              />
-            </Form.Group>
-            <Button className="my-3" type="submit">
-              Create Pay Sheet
-            </Button>
-          </Form>
-        </Container>
-      </div>
-    );
-  };
+  return (
+    <>
+      <Container className="m-5 w-25">
+        <Row className="my-2">
+          <Col>
+            <Form.Label>Basic Salary (LKR) </Form.Label>
+            <Form.Control
+              type="number"
+              value={basic}
+              onChange={(e) => setBasic(e.target.value)}
+              placeholder="Enter Basic Salary"
+            />
+          </Col>
+        </Row>
+        <Row className="my-2">
+          <Col>
+            <Form.Label>Dollar Rate</Form.Label>
+            <Form.Control
+              key={"dollar-rate"}
+              type="number"
+              value={dollarRate}
+              onChange={(e) => setDollarRate(e.target.value)}
+              placeholder="Enter Dollar Rate"
+            />
+          </Col>
+        </Row>
+        <Button className="my-3" onClick={submitHandler}>
+          Create Pay Sheet
+        </Button>
+      </Container>
 
-  const PaySheet = () => {
-    return (
-      <div>
-        <Container className="m-5 w-25">
-          <hr />
-          <Row>
-            <Col className="font-weight-bold">Basic in LKR :</Col>
-            <Col className="text-end">{rs(calObj.basic)}</Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">Basic in USD :</Col>
-            <Col className="text-end">{$(calObj.usdBasic)}</Col>
-          </Row>
-          <hr />
-          <Row>
-            <Col className="font-weight-bold">Internet :</Col>
-            <Col className="text-end">{rs(calObj.internetAllowance)}</Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">Total income :</Col>
-            <Col className="text-end">{rs(calObj.totalInLkr)}</Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">Total APIT :</Col>
-            <Col className="text-end">{rs(calObj.totalTax)}</Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">EPF :</Col>
-            <Col className="text-end">{rs(calObj.epfDeductionsEmployee)}</Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">Stmp duty :</Col>
-            <Col className="text-end">{rs(calObj.stampDuty)}</Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">Total EPF :</Col>
-            <Col className="text-end">
-              {rs(calObj.epfByEmployer + calObj.epfDeductionsEmployee)}
-            </Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">Total ETF :</Col>
-            <Col className="text-end">{rs(calObj.epfByEmployer)}</Col>
-          </Row>
-          <hr />
-          <Row>
-            <Col className="font-weight-bold">Take home :</Col>
-            <Col className="text-end">{rs(calObj.takeHome)}</Col>
-          </Row>
-        </Container>
-      </div>
-    );
-  };
-
-  if (requested) {
-    return (
-      <>
-        <DataForm />
-        <PaySheet />
-      </>
-    );
-  } else {
-    return (
-      <>
-        <DataForm />
-      </>
-    );
-  }
+      <Container className="m-5 w-25">
+        <hr />
+        <Row>
+          <Col className="font-weight-bold">Basic in LKR :</Col>
+          <Col className="text-end">{rs(calObj.basic)}</Col>
+        </Row>
+        <Row>
+          <Col className="font-weight-bold">Basic in USD :</Col>
+          <Col className="text-end">{$(calObj.usdBasic)}</Col>
+        </Row>
+        <hr />
+        <Row>
+          <Col className="font-weight-bold">Internet :</Col>
+          <Col className="text-end">{rs(calObj.internetAllowance)}</Col>
+        </Row>
+        <Row>
+          <Col className="font-weight-bold">Total income :</Col>
+          <Col className="text-end">{rs(calObj.totalInLkr)}</Col>
+        </Row>
+        <Row>
+          <Col className="font-weight-bold">Total APIT :</Col>
+          <Col className="text-end">{rs(calObj.totalTax)}</Col>
+        </Row>
+        <Row>
+          <Col className="font-weight-bold">EPF :</Col>
+          <Col className="text-end">{rs(calObj.epfDeductionsEmployee)}</Col>
+        </Row>
+        <Row>
+          <Col className="font-weight-bold">Stmp duty :</Col>
+          <Col className="text-end">{rs(calObj.stampDuty)}</Col>
+        </Row>
+        <Row>
+          <Col className="font-weight-bold">Total EPF :</Col>
+          <Col className="text-end">
+            {rs(calObj.epfByEmployer + calObj.epfDeductionsEmployee)}
+          </Col>
+        </Row>
+        <Row>
+          <Col className="font-weight-bold">Total ETF :</Col>
+          <Col className="text-end">{rs(calObj.epfByEmployer)}</Col>
+        </Row>
+        <hr />
+        <Row>
+          <Col className="font-weight-bold">Take home :</Col>
+          <Col className="text-end">{rs(calObj.takeHome)}</Col>
+        </Row>
+      </Container>
+    </>
+  );
 }
 
 export default App;
