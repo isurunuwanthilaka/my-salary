@@ -5,6 +5,7 @@ import { round } from "lodash";
 function App() {
   const [basic, setBasic] = useState(320000);
   const [dollarRate, setDollarRate] = useState(350);
+  const [requested, setRequested] = useState(false);
   const [calObj, setCalObj] = useState({
     usdBasic: 0,
     basic: 0,
@@ -75,6 +76,7 @@ function App() {
       internetAllowance,
       totalInLkr,
     });
+    setRequested(true);
   };
 
   return (
@@ -86,7 +88,10 @@ function App() {
             <Form.Control
               type="number"
               value={basic}
-              onChange={(e) => setBasic(e.target.value)}
+              onChange={(e) => {
+                setBasic(e.target.value);
+                setRequested(false);
+              }}
               placeholder="Enter Basic Salary"
             />
           </Col>
@@ -98,7 +103,10 @@ function App() {
               key={"dollar-rate"}
               type="number"
               value={dollarRate}
-              onChange={(e) => setDollarRate(e.target.value)}
+              onChange={(e) => {
+                setDollarRate(e.target.value);
+                setRequested(false);
+              }}
               placeholder="Enter Dollar Rate"
             />
           </Col>
@@ -107,54 +115,55 @@ function App() {
           Create Pay Sheet
         </Button>
       </Container>
-
-      <Container className="m-5 w-25">
-        <hr />
-        <Row>
-          <Col className="font-weight-bold">Basic in LKR :</Col>
-          <Col className="text-end">{rs(calObj.basic)}</Col>
-        </Row>
-        <Row>
-          <Col className="font-weight-bold">Basic in USD :</Col>
-          <Col className="text-end">{$(calObj.usdBasic)}</Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col className="font-weight-bold">Internet :</Col>
-          <Col className="text-end">{rs(calObj.internetAllowance)}</Col>
-        </Row>
-        <Row>
-          <Col className="font-weight-bold">Total income :</Col>
-          <Col className="text-end">{rs(calObj.totalInLkr)}</Col>
-        </Row>
-        <Row>
-          <Col className="font-weight-bold">Total APIT :</Col>
-          <Col className="text-end">{rs(calObj.totalTax)}</Col>
-        </Row>
-        <Row>
-          <Col className="font-weight-bold">EPF :</Col>
-          <Col className="text-end">{rs(calObj.epfDeductionsEmployee)}</Col>
-        </Row>
-        <Row>
-          <Col className="font-weight-bold">Stmp duty :</Col>
-          <Col className="text-end">{rs(calObj.stampDuty)}</Col>
-        </Row>
-        <Row>
-          <Col className="font-weight-bold">Total EPF :</Col>
-          <Col className="text-end">
-            {rs(calObj.epfByEmployer + calObj.epfDeductionsEmployee)}
-          </Col>
-        </Row>
-        <Row>
-          <Col className="font-weight-bold">Total ETF :</Col>
-          <Col className="text-end">{rs(calObj.epfByEmployer)}</Col>
-        </Row>
-        <hr />
-        <Row>
-          <Col className="font-weight-bold">Take home :</Col>
-          <Col className="text-end">{rs(calObj.takeHome)}</Col>
-        </Row>
-      </Container>
+      {requested && (
+        <Container className="m-5 w-25">
+          <hr />
+          <Row>
+            <Col className="font-weight-bold">Basic in LKR :</Col>
+            <Col className="text-end">{rs(calObj.basic)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">Basic in USD :</Col>
+            <Col className="text-end">{$(calObj.usdBasic)}</Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col className="font-weight-bold">Internet :</Col>
+            <Col className="text-end">{rs(calObj.internetAllowance)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">Total income :</Col>
+            <Col className="text-end">{rs(calObj.totalInLkr)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">Total APIT :</Col>
+            <Col className="text-end">{rs(calObj.totalTax)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">EPF :</Col>
+            <Col className="text-end">{rs(calObj.epfDeductionsEmployee)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">Stmp duty :</Col>
+            <Col className="text-end">{rs(calObj.stampDuty)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">Total EPF :</Col>
+            <Col className="text-end">
+              {rs(calObj.epfByEmployer + calObj.epfDeductionsEmployee)}
+            </Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">Total ETF :</Col>
+            <Col className="text-end">{rs(calObj.epfByEmployer)}</Col>
+          </Row>
+          <hr />
+          <Row>
+            <Col className="font-weight-bold">Take home :</Col>
+            <Col className="text-end">{rs(calObj.takeHome)}</Col>
+          </Row>
+        </Container>
+      )}
     </>
   );
 }
