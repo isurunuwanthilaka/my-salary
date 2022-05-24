@@ -146,48 +146,69 @@ function App() {
         <Container className="m-5 w-25">
           <hr />
           <Row>
-            <Col className="font-weight-bold">Basic in LKR :</Col>
+            <Col className="font-weight-bold">Basic in LKR</Col>
+            <Col>:</Col>
             <Col className="text-end">{rs(calObj.basic)}</Col>
           </Row>
           <Row>
-            <Col className="font-weight-bold">Basic in USD :</Col>
+            <Col className="font-weight-bold">Basic in USD</Col>
+            <Col>:</Col>
             <Col className="text-end">{$(calObj.usdBasic)}</Col>
           </Row>
           <hr />
           <Row>
-            <Col className="font-weight-bold">Internet :</Col>
+            <Col className="font-weight-bold">Internet Bill</Col>
+            <Col>:</Col>
             <Col className="text-end">{rs(calObj.internetAllowance)}</Col>
           </Row>
           <Row>
-            <Col className="font-weight-bold">Total income :</Col>
+            <Col className="font-weight-bold">Total Earning</Col>
+            <Col>:</Col>
             <Col className="text-end">{rs(calObj.totalInLkr)}</Col>
           </Row>
           <Row>
-            <Col className="font-weight-bold">Total APIT :</Col>
+            <Col className="font-weight-bold">APIT</Col>
+            <Col>:</Col>
             <Col className="text-end">{rs(calObj.totalTax)}</Col>
           </Row>
           <Row>
-            <Col className="font-weight-bold">EPF :</Col>
-            <Col className="text-end">{rs(calObj.epfDeductionsEmployee)}</Col>
-          </Row>
-          <Row>
-            <Col className="font-weight-bold">Stmp duty :</Col>
+            <Col className="font-weight-bold">Stamp Duty</Col>
+            <Col>:</Col>
             <Col className="text-end">{rs(calObj.stampDuty)}</Col>
           </Row>
           <Row>
-            <Col className="font-weight-bold">Total EPF :</Col>
+            <Col className="font-weight-bold">EPF (Employee)</Col>
+            <Col>:</Col>
+            <Col className="text-end">{rs(calObj.epfDeductionsEmployee)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">EPF (Employer)</Col>
+            <Col>:</Col>
+            <Col className="text-end">{rs(calObj.epfByEmployer)}</Col>
+          </Row>
+          <Row>
+            <Col className="font-weight-bold">Total EPF</Col>
+            <Col>:</Col>
             <Col className="text-end">
               {rs(calObj.epfByEmployer + calObj.epfDeductionsEmployee)}
             </Col>
           </Row>
           <Row>
-            <Col className="font-weight-bold">Total ETF :</Col>
-            <Col className="text-end">{rs(calObj.epfByEmployer)}</Col>
+            <Col className="font-weight-bold">ETF (Employer)</Col>
+            <Col>:</Col>
+            <Col className="text-end">{rs(calObj.etfByEmployer)}</Col>
           </Row>
           <hr />
           <Row>
-            <Col className="font-weight-bold">Take home :</Col>
-            <Col className="text-end">{rs(calObj.takeHome)}</Col>
+            <Col className="font-weight-bold">
+              <strong>Take Home</strong>
+            </Col>
+            <Col>
+              <strong>:</strong>
+            </Col>
+            <Col className="text-end">
+              <strong>{rs(calObj.takeHome)}</strong>
+            </Col>
           </Row>
         </Container>
       )}
