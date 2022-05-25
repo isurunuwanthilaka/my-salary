@@ -19,7 +19,7 @@ function App() {
     totalInLkr: 0,
   });
 
-  const [windowSize, setWindowSize] = useState(null);
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
