@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Form, Button, Container } from "react-bootstrap";
 import { round } from "lodash";
 
@@ -18,6 +18,18 @@ function App() {
     internetAllowance: 0,
     totalInLkr: 0,
   });
+
+  const [windowSize, setWindowSize] = useState(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const $ = (num) => {
     var formatter = new Intl.NumberFormat("en-US", {
@@ -108,7 +120,9 @@ function App() {
 
   return (
     <>
-      <Container className="m-5 w-25">
+      <Container
+        className={!windowSize || windowSize > 650 ? "m-5 w-25" : "p-5"}
+      >
         <Row className="my-2">
           <Col>
             <Form.Label>Basic Salary (LKR) </Form.Label>
@@ -143,7 +157,9 @@ function App() {
         </Button>
       </Container>
       {requested && (
-        <Container className="m-5 w-25">
+        <Container
+          className={!windowSize || windowSize > 650 ? "m-5 w-25" : "p-5"}
+        >
           <hr />
           <Row>
             <Col className="font-weight-bold">Basic in LKR</Col>
